@@ -61,7 +61,35 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-              window.location = window.routes.cart_url;
+
+              if(additional_product_id != undefined){
+
+                let formData = {
+                  'items': [{
+                   'id': additional_product_id,
+                   'quantity': 1
+                   }]
+                 };
+                 
+                 fetch(window.Shopify.routes.root + 'cart/add.js', {
+                   method: 'POST',
+                   headers: {
+                     'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify(formData)
+                 })
+                 .then(response => {
+                  
+                  window.location = window.routes.cart_url;
+                   return response.json();
+                 })
+                 .catch((error) => {
+                   console.error('Error:', error);
+                 });
+                 
+
+              }
+
               return;
             }
 
