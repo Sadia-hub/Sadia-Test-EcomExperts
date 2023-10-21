@@ -31,7 +31,7 @@ if (!customElements.get('product-form')) {
         delete config.headers['Content-Type'];
 
         const formData = new FormData(this.form);
-
+        
        
 
         if (this.cart) {
@@ -64,45 +64,42 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-
-              let data  = await fetch(window.Shopify.routes.root + 'cart.js')
-              let products = await data.json()
-
-              products && products.items.map(({product_id, options_with_values})=>{
-                if(product_id == 8723140018472 && options_with_values[0].value == "Black" && options_with_values[1].value == "Medium"){
+              /**
+               * Author:Sadia
+               * Data: 10/21/2023
+               * Purpose: Below script checks if product being added is Handbag in Medium Black Varinat then Winter Jacket be Added in the Cart too
+               */
+              if(additional_product_id != undefined && response.key == "46990988050728:59e17f6bf22f31de2a32d5a8c8f28b66"){
+                console.log(true)
+                let formData = {
+                  'items': [{
+                   'id': additional_product_id,
+                   'quantity': 1
+                   }]
+                 };
+                 console.log("hi")
+                 console.log("hi")
+                 fetch(window.Shopify.routes.root + 'cart/add.js', {
+                   method: 'POST',
+                   headers: {
+                     'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify(formData)
+                 })
+                 .then(response => {
                   
-                  if(additional_product_id != undefined){
-                    console.log(true)
-                    let formData = {
-                      'items': [{
-                       'id': additional_product_id,
-                       'quantity': 1
-                       }]
-                     };
-                     console.log("hi")
-                     console.log("hi")
-                     fetch(window.Shopify.routes.root + 'cart/add.js', {
-                       method: 'POST',
-                       headers: {
-                         'Content-Type': 'application/json'
-                       },
-                       body: JSON.stringify(formData)
-                     })
-                     .then(response => {
-                      
-                      window.location = window.routes.cart_url;
-                       return response.json();
-                     })
-                     .catch((error) => {
-                       console.error('Error:', error);
-                     });
-                     
-    
-                  }
-                }
-              
-              })
-                  
+                  window.location = window.routes.cart_url;
+                   return response.json();
+                 })
+                 .catch((error) => {
+                   console.error('Error:', error);
+                 });
+                 
+
+              }
+              /**
+               * End Code By Sadia
+               */
               window.location = window.routes.cart_url;
               return;
             }
