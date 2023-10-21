@@ -70,6 +70,7 @@ if (!customElements.get('product-form')) {
 
               products.items.map(({product_id, options_with_values})=>{
                 if(product_id == 8723140018472 && options_with_values[0].value == "Black" && options_with_values[1].value == "Medium"){
+                  
                   if(additional_product_id != undefined){
                     console.log(true)
                     let formData = {
