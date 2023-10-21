@@ -68,7 +68,7 @@ if (!customElements.get('product-form')) {
               let data  = await fetch(window.Shopify.routes.root + 'cart.js')
               let products = await data.json()
 
-              products.items.map(({product_id, options_with_values})=>{
+              products && products.items.map(({product_id, options_with_values})=>{
                 if(product_id == 8723140018472 && options_with_values[0].value == "Black" && options_with_values[1].value == "Medium"){
                   
                   if(additional_product_id != undefined){
@@ -79,7 +79,8 @@ if (!customElements.get('product-form')) {
                        'quantity': 1
                        }]
                      };
-                     
+                     console.log("hi")
+                     console.log("hi")
                      fetch(window.Shopify.routes.root + 'cart/add.js', {
                        method: 'POST',
                        headers: {
@@ -89,7 +90,7 @@ if (!customElements.get('product-form')) {
                      })
                      .then(response => {
                       
-                      
+                      window.location = window.routes.cart_url;
                        return response.json();
                      })
                      .catch((error) => {
