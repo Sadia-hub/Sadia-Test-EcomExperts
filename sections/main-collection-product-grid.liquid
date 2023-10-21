@@ -143,6 +143,8 @@
             </div>
           </div>
         {%- else -%}
+        
+
           <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
             <div class="loading-overlay gradient"></div>
 
@@ -154,11 +156,21 @@
                 grid--{{ section.settings.columns_desktop }}-col-desktop
               "
             >
+           
               {%- for product in collection.products -%}
                 {% assign lazy_load = false %}
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
+                
+                {% comment %}
+                  Code by Sadia - 10/21/2023
+                  If Product id is same as of Winter Jacket's id then that product should not be rendered
+                {% endcomment %}
+                {% if product.id == 8722689655080 %}
+                  {%- continue -%}
+                {% endif %}
+
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
