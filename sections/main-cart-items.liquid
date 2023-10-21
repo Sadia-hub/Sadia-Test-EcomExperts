@@ -283,6 +283,11 @@
                             </button>
                           </quantity-input>
                         </div>
+                        {% comment %}
+                        Code: Sadia
+                        Date: 10/21/2023
+                        Purpose: Pass item key to check if item to be removed if Handbag with Medium Black Variant
+                        {% endcomment %}
                         <cart-remove-button
                           id="Remove-{{ item.index | plus: 1 }}"
                           data-index="{{ item.index | plus: 1 }}"

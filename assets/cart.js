@@ -6,6 +6,15 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
       cartItems.updateQuantity(this.dataset.index, 0);
+
+      /**
+       * Author: Sadia
+       * Date: 10/21/2023
+       * Purpose: Below Script Checks if items being removed id Handbag with Medium Black Variant
+       * If true then get index of bundle item, plus 1, and update the quantity as index+1 equals line number
+       * of the product to be removed
+       * 
+       */
       console.log(this.dataset.index)
       if(this.dataset.variantKey == "46990988050728:59e17f6bf22f31de2a32d5a8c8f28b66"){
 
@@ -18,11 +27,11 @@ class CartRemoveButton extends HTMLElement {
           index!= -1 ? cartItems.updateQuantity(index, 0) : "";
           console.log(index)
         }
-
-        
-        
-       
       }
+
+      /**
+       * End Code Sadia
+       */
       
     });
   }
