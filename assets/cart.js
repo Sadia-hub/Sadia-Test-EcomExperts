@@ -6,17 +6,17 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
       cartItems.updateQuantity(this.dataset.index, 0);
-      
+      console.log(this.dataset.index)
       if(this.dataset.variantKey == "46990988050728:59e17f6bf22f31de2a32d5a8c8f28b66"){
 
         const data = await fetch(window.Shopify.routes.root + 'cart.js');
         const products = await data.json();
         
         if(products){
-          const index = products.items.findIndex(product => product.key == "46984317239592:d295b268d9138355d0f409d59b9cfd6a");
-
-
+          let index = products.items.findIndex(product => product.id == 46984317239592);
+          index+=1;          
           index!= -1 ? cartItems.updateQuantity(index, 0) : "";
+          console.log(index)
         }
 
         
