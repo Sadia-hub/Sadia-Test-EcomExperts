@@ -31,6 +31,9 @@ if (!customElements.get('product-form')) {
         delete config.headers['Content-Type'];
 
         const formData = new FormData(this.form);
+
+       
+
         if (this.cart) {
           formData.append(
             'sections',
@@ -40,10 +43,10 @@ if (!customElements.get('product-form')) {
           this.cart.setActiveElement(document.activeElement);
         }
         config.body = formData;
-
+        console.log("form data",formData)
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
-          .then((response) => {
+          .then(async (response) => {
             if (response.status) {
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',
@@ -62,34 +65,43 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
 
-              if(additional_product_id != undefined){
+              let data  = await fetch(window.Shopify.routes.root + 'cart.js')
+              let products = await data.json()
 
-                let formData = {
-                  'items': [{
-                   'id': additional_product_id,
-                   'quantity': 1
-                   }]
-                 };
-                 
-                 fetch(window.Shopify.routes.root + 'cart/add.js', {
-                   method: 'POST',
-                   headers: {
-                     'Content-Type': 'application/json'
-                   },
-                   body: JSON.stringify(formData)
-                 })
-                 .then(response => {
+              products.items.map(({product_id, options_with_values})=>{
+                if(product_id == 8723140018472 && options_with_values[0].value == "Black" && options_with_values[1].value == "Medium"){
+                  if(additional_product_id != undefined){
+                    console.log(true)
+                    let formData = {
+                      'items': [{
+                       'id': additional_product_id,
+                       'quantity': 1
+                       }]
+                     };
+                     
+                     fetch(window.Shopify.routes.root + 'cart/add.js', {
+                       method: 'POST',
+                       headers: {
+                         'Content-Type': 'application/json'
+                       },
+                       body: JSON.stringify(formData)
+                     })
+                     .then(response => {
+                      
+                      
+                       return response.json();
+                     })
+                     .catch((error) => {
+                       console.error('Error:', error);
+                     });
+                     
+    
+                  }
+                }
+              
+              })
                   
-                  window.location = window.routes.cart_url;
-                   return response.json();
-                 })
-                 .catch((error) => {
-                   console.error('Error:', error);
-                 });
-                 
-
-              }
-
+              window.location = window.routes.cart_url;
               return;
             }
 
