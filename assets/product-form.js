@@ -46,7 +46,7 @@ if (!customElements.get('product-form')) {
         console.log("form data",formData)
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
-          .then(async (response) => {
+          .then( (response) => {
             if (response.status) {
               publish(PUB_SUB_EVENTS.cartError, {
                 source: 'product-form',

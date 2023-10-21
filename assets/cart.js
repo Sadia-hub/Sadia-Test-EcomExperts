@@ -12,11 +12,14 @@ class CartRemoveButton extends HTMLElement {
         const data = await fetch(window.Shopify.routes.root + 'cart.js');
         const products = await data.json();
         
+        if(products){
+          const index = products.items.findIndex(product => product.key == "46984317239592:d295b268d9138355d0f409d59b9cfd6a");
 
-        const index = products && products.items.findIndex(product => product.key == "46984317239592:d295b268d9138355d0f409d59b9cfd6a");
 
+          index!= -1 ? cartItems.updateQuantity(index, 0) : "";
+        }
 
-        index!= -1 ? cartItems.updateQuantity(index, 0) : "";
+        
         
        
       }
