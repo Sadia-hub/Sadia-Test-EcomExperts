@@ -18,6 +18,7 @@ if (!customElements.get('product-form')) {
 
       onSubmitHandler(evt) {
         evt.preventDefault();
+        console.log(evt)
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
         this.handleErrorMessage();
@@ -43,8 +44,7 @@ if (!customElements.get('product-form')) {
           this.cart.setActiveElement(document.activeElement);
         }
         config.body = formData;
-        console.log("form data",formData)
-        console.log("config", config)
+       
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then( (response) => {
@@ -85,10 +85,9 @@ if (!customElements.get('product-form')) {
                    },
                    body: JSON.stringify(formData)
                  })
-                 .then(response => {
+                 .then(response => response.json())
+                 .then(response =>{
                   
-                  // window.location = window.routes.cart_url;
-                  //  return response.json();
                  })
                  .catch((error) => {
                    console.error('Error:', error);
@@ -99,7 +98,7 @@ if (!customElements.get('product-form')) {
               /**
                * End Code By Sadia
                */
-              window.location = window.routes.cart_url;
+              // window.location = window.routes.cart_url;
               return;
             }
 

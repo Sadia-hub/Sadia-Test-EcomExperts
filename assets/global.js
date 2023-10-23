@@ -991,13 +991,11 @@ class VariantSelects extends HTMLElement {
     let color= fieldsets.map((fieldset) => {
       return Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value;
     });
-
-    console.log(this.currentVariant)
     this.options = Array.from(this.querySelectorAll('select'), (select) => {
-      console.log(select)
+      
       return select.value});
     this.options[0] = color[0]
-    console.log(this.options)
+    
   }
 
   updateMasterId() {
@@ -1040,9 +1038,12 @@ class VariantSelects extends HTMLElement {
     const productForms = document.querySelectorAll(
       `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`
     );
+    
+    console.log(productForms)
     productForms.forEach((productForm) => {
       const input = productForm.querySelector('input[name="id"]');
       input.value = this.currentVariant.id;
+      console.log(input.value)
       input.dispatchEvent(new Event('change', { bubbles: true }));
     });
   }
