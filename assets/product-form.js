@@ -44,6 +44,7 @@ if (!customElements.get('product-form')) {
         }
         config.body = formData;
         console.log("form data",formData)
+        console.log("config", config)
         fetch(`${routes.cart_add_url}`, config)
           .then((response) => response.json())
           .then( (response) => {
@@ -77,8 +78,6 @@ if (!customElements.get('product-form')) {
                    'quantity': 1
                    }]
                  };
-                 console.log("hi")
-                 console.log("hi")
                  fetch(window.Shopify.routes.root + 'cart/add.js', {
                    method: 'POST',
                    headers: {
@@ -88,8 +87,8 @@ if (!customElements.get('product-form')) {
                  })
                  .then(response => {
                   
-                  window.location = window.routes.cart_url;
-                   return response.json();
+                  // window.location = window.routes.cart_url;
+                  //  return response.json();
                  })
                  .catch((error) => {
                    console.error('Error:', error);
@@ -100,7 +99,7 @@ if (!customElements.get('product-form')) {
               /**
                * End Code By Sadia
                */
-              window.location = window.routes.cart_url;
+              // window.location = window.routes.cart_url;
               return;
             }
 
