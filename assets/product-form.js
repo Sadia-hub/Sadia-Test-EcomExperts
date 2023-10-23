@@ -98,7 +98,7 @@ if (!customElements.get('product-form')) {
               /**
                * End Code By Sadia
                */
-              // window.location = window.routes.cart_url;
+               window.location = window.routes.cart_url;
               return;
             }
 
