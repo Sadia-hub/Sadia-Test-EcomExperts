@@ -971,7 +971,7 @@ class VariantSelects extends HTMLElement {
       this.setUnavailable();
     } else {
       this.updateMedia();
-      // this.updateURL();
+      this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
       this.updateShareUrl();
@@ -979,7 +979,25 @@ class VariantSelects extends HTMLElement {
   }
 
   updateOptions() {
-    this.options = Array.from(this.querySelectorAll('select'), (select) => select.value);
+    
+    /**
+     * Author: Sadia
+     * Date: 10/23/2023
+     * Purpose: Code fixes bug of dropdown that would not allow selecting size for variants other than black
+     */
+    const container = document.getElementById('colors-options');
+    const fieldsets = Array.from(container.querySelectorAll('fieldset'));
+
+    let color= fieldsets.map((fieldset) => {
+      return Array.from(fieldset.querySelectorAll('input')).find((radio) => radio.checked).value;
+    });
+
+    console.log(this.currentVariant)
+    this.options = Array.from(this.querySelectorAll('select'), (select) => {
+      console.log(select)
+      return select.value});
+    this.options[0] = color[0]
+    console.log(this.options)
   }
 
   updateMasterId() {
