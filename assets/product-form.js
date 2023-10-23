@@ -87,25 +87,7 @@ if (!customElements.get('product-form')) {
                  })
                  .then(response => response.json())
                  .then(response =>{
-
-                  if (!this.error)
-                  publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-form', productVariantId: formData.get('id'), cartData: response });
-                this.error = false;
-                const quickAddModal = this.closest('quick-add-modal');
-                if (quickAddModal) {
-                  document.body.addEventListener(
-                    'modalClosed',
-                    () => {
-                      setTimeout(() => {
-                        this.cart.renderContents(response);
-                      });
-                    },
-                    { once: true }
-                  );
-                  quickAddModal.hide(true);
-                } else {
-                  this.cart.renderContents(response);
-                }
+                  
                  })
                  .catch((error) => {
                    console.error('Error:', error);
@@ -116,31 +98,10 @@ if (!customElements.get('product-form')) {
               /**
                * End Code By Sadia
                */
-              window.location = window.routes.cart_url;
+              // window.location = window.routes.cart_url;
               return;
             }
-            if (response.status) {
-              publish(PUB_SUB_EVENTS.cartError, {
-                source: 'product-form',
-                productVariantId: formData.get('id'),
-                errors: response.errors || response.description,
-                message: response.message,
-              });
-              this.handleErrorMessage(response.description);
 
-              const soldOutMessage = this.submitButton.querySelector('.sold-out-message');
-              if (!soldOutMessage) return;
-              this.submitButton.setAttribute('aria-disabled', true);
-              this.submitButton.querySelector('span').classList.add('hidden');
-              soldOutMessage.classList.remove('hidden');
-              this.error = true;
-              return;
-            }
-            else if (!this.cart) {
-              
-              window.location = window.routes.cart_url;
-              return;
-            }
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, { source: 'product-form', productVariantId: formData.get('id'), cartData: response });
             this.error = false;
