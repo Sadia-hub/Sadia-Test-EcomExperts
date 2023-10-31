@@ -964,6 +964,8 @@ class VariantSelects extends HTMLElement {
      */
     this.toggleAddButton(true, '', true);
 
+   
+
     
   }
 
@@ -971,6 +973,16 @@ class VariantSelects extends HTMLElement {
     this.updateOptions();
     this.updateMasterId();
     this.toggleAddButton(true, '', true);
+    this.updatePickupAvailability();
+    this.removeErrorMessage();
+    this.updateVariantStatuses();
+    
+
+    if (!this.currentVariant) {
+      this.toggleAddButton(true, '', true);
+      this.setUnavailable();
+    } else {
+      this.updateMedia();
 
     /***
      * AUTHOR: SADIA 
@@ -987,16 +999,6 @@ class VariantSelects extends HTMLElement {
      * END CODE
      */
 
-    this.updatePickupAvailability();
-    this.removeErrorMessage();
-    this.updateVariantStatuses();
-    
-
-    if (!this.currentVariant) {
-      this.toggleAddButton(true, '', true);
-      this.setUnavailable();
-    } else {
-      this.updateMedia();
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();

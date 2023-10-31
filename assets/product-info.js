@@ -4,10 +4,29 @@ if (!customElements.get('product-info')) {
     class ProductInfo extends HTMLElement {
       constructor() {
         super();
+
+         /**
+         * AUTHOR: SADIA 
+         * DATE: 11/1/2023
+         * PURPOSE: IF USER PRESSES BACK BUTTON, PAGE SHOULD BE REFRESHED TO UPDATE CONTENT
+         */
+        window.addEventListener( "pageshow", function ( event ) {
+          var perfEntries = performance.getEntriesByType("navigation");
+          if (perfEntries[0].type === "back_forward") {
+            location.reload();
+          }
+        });
+
+        /**
+         * END CODE
+         */
+
         this.input = this.querySelector('.quantity__input');
         this.currentVariant = this.querySelector('.product-variant-id');
         this.variantSelects = this.querySelector('variant-radios');
         this.submitButton = this.querySelector('[type="submit"]');
+
+        
       }
 
       cartUpdateUnsubscriber = undefined;
