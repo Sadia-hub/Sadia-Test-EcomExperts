@@ -956,15 +956,41 @@ class VariantSelects extends HTMLElement {
   constructor() {
     super();
     this.addEventListener('change', this.onVariantChange);
+
+    /***
+     * AUTHOR: SADIA 
+     * DATE: 11/1/2023
+     * PURPOSE: INITIALLY ADD TO CART BUTTON WILL BE DISABLED AS INITIAL VALUE OF VARIANT IS UNSELECTED
+     */
+    this.toggleAddButton(true, '', true);
+
+    
   }
 
   onVariantChange() {
     this.updateOptions();
     this.updateMasterId();
-    this.toggleAddButton(true, '', false);
+    this.toggleAddButton(true, '', true);
+
+    /***
+     * AUTHOR: SADIA 
+     * DATE: 11/1/2023
+     * PURPOSE: ADD TO CART SHOULD BE DISABLED IF VARIANT SELECTED HAS A VALUE OF UNSELECTED
+     */
+
+    if(this.currentVariant.option2 == "Unselected"){
+      this.toggleAddButton(true, '', true);
+      return
+    }
+
+    /***
+     * END CODE
+     */
+
     this.updatePickupAvailability();
     this.removeErrorMessage();
     this.updateVariantStatuses();
+    
 
     if (!this.currentVariant) {
       this.toggleAddButton(true, '', true);
@@ -1031,7 +1057,7 @@ class VariantSelects extends HTMLElement {
   updateShareUrl() {
     const shareButton = document.getElementById(`Share-${this.dataset.section}`);
     if (!shareButton || !shareButton.updateUrl) return;
-    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}?variant=${this.currentVariant.id}`);
+    shareButton.updateUrl(`${window.shopUrl}${this.dataset.url}`);
   }
 
   updateVariantInput() {
@@ -1039,11 +1065,9 @@ class VariantSelects extends HTMLElement {
       `#product-form-${this.dataset.section}, #product-form-installment-${this.dataset.section}`
     );
     
-    console.log(productForms)
     productForms.forEach((productForm) => {
       const input = productForm.querySelector('input[name="id"]');
       input.value = this.currentVariant.id;
-      console.log(input.value)
       input.dispatchEvent(new Event('change', { bubbles: true }));
     });
   }
