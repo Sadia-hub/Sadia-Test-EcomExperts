@@ -984,26 +984,14 @@ class VariantSelects extends HTMLElement {
     } else {
       this.updateMedia();
 
-    /***
-     * AUTHOR: SADIA 
-     * DATE: 11/1/2023
-     * PURPOSE: ADD TO CART SHOULD BE DISABLED IF VARIANT SELECTED HAS A VALUE OF UNSELECTED
-     */
-
-    if(this.currentVariant.option2 == "Unselected"){
-      this.toggleAddButton(true, '', true);
-      return
-    }
-
-    /***
-     * END CODE
-     */
+   
 
       this.updateURL();
       this.updateVariantInput();
       this.renderProductInfo();
       this.updateShareUrl();
     }
+
   }
 
   updateOptions() {
@@ -1180,10 +1168,26 @@ class VariantSelects extends HTMLElement {
           inventoryDestination.classList.toggle('visibility-hidden', inventorySource.innerText === '');
 
         const addButtonUpdated = html.getElementById(`ProductSubmitButton-${sectionId}`);
-        this.toggleAddButton(
+
+        
+     /***
+     * AUTHOR: SADIA 
+     * DATE: 11/1/2023
+     * PURPOSE: ADD TO CART SHOULD BE DISABLED IF VARIANT SELECTED HAS A VALUE OF UNSELECTED
+     */
+
+     if(this.currentVariant.option2 != "Unselected"){
+      this.toggleAddButton(
           addButtonUpdated ? addButtonUpdated.hasAttribute('disabled') : true,
           window.variantStrings.soldOut
-        );
+      );
+    }
+
+    /***
+     * END CODE
+     */
+
+        
 
         publish(PUB_SUB_EVENTS.variantChange, {
           data: {
